@@ -1,0 +1,10 @@
+[Desktop Entry]
+Name=FastQ to Fasta
+GenericName=File Conversion App
+Comment=Simple bioinformatics tool to convert files from FastQ to Fasta
+Categories=Utility;Education;
+Exec=com.github.omig12.Vala_FastQ_to_Fasta
+Icon=application-default-icon
+Terminal=false
+Type=Application
+Keywords=FastQ;Fasta;
