@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright 2019 Your Name <israelodilan@gmail.com> -->
+<component type="desktop">
+  <id>com.github.omig12.Vala_FastQ_to_Fasta</id>
+  <metadata_license>CC0</metadata_license>
+  <name>FastQ to Fasta</name>
+  <summary>Loose your quality.</summary>
+  <description>
+    <p>Simple bioinformatics tool to convert files from FastQ to Fasta. Quickly open, convert, and save your data.</p>
+  </description>
+    <custom>
+     <value key="x-appcenter-color-primary">rgb(5, 111, 161)</value>
+     <value key="x-appcenter-color-primary-text">rgb(223, 229, 230)</value>
+     <value key="x-appcenter-suggested-price">1</value>
+  </custom>
+</component>
