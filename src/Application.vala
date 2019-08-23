@@ -7,6 +7,11 @@ public class  Fastq_to_Fasta : Gtk.Application {
     }
 
     protected override void activate () {
+
+        //
+        // Application Window Elements
+        //
+
         var main_window = new Gtk.ApplicationWindow (this);
         main_window.title = "FastQ to Fasta";
         main_window.window_position = Gtk.WindowPosition.CENTER;
@@ -49,10 +54,11 @@ public class  Fastq_to_Fasta : Gtk.Application {
         var file_saver = new Gtk.FileChooserDialog("Save file as", main_window, Gtk.FileChooserAction.SAVE,"_Cancel", Gtk.ResponseType.CANCEL, "_Save", Gtk.ResponseType.ACCEPT, null);
 
 
-    //
-    // Methods
-    //
+        //
+        // Application Functions
+        //
 
+        // Open File Function
         string filename = "";
         open_button.clicked.connect (() =>{
             if (file_chooser.run() == Gtk.ResponseType.ACCEPT) {
@@ -71,19 +77,15 @@ public class  Fastq_to_Fasta : Gtk.Application {
         });
 
 
-        // Convert file method
+        // Convert File Function
 	    convert_button.clicked.connect (() => {
 	        int lines = 0;
             string[] text = text_view.buffer.text.split("\n");
             text_view.buffer.text = "";
-
             foreach (string line in text) {
                 lines += 1;
                 if (lines != 3 && lines != 4) {
                     if (lines == 1) {
-                        // text_view.buffer.text = string.join("\n",text_view.buffer.text, "Here! Inner \n");
-                        // line = line.splice(0,1,">");
-                        // line = string.join("",">", line[1:-1]);
                         text_view.buffer.text = string.join("\n",text_view.buffer.text, line.splice(0,1,">"));
                     }
                     if (lines == 2) {
@@ -94,7 +96,7 @@ public class  Fastq_to_Fasta : Gtk.Application {
                     lines = 0;
                 }
             }
-            text_view.buffer.text = text_view.buffer.text[1:-2];
+            text_view.buffer.text = text_view.buffer.text[1:-1];
             stdout.printf ("FileConverted\n");
             convert_button.set_label ("File Converted");
             convert_button.sensitive = false;
@@ -102,8 +104,7 @@ public class  Fastq_to_Fasta : Gtk.Application {
         });
 
 
-        // Save file method
-
+        // Save File Function
         save_button.clicked.connect (() =>{
             try {
                 file_saver.set_do_overwrite_confirmation (true);
@@ -122,10 +123,13 @@ public class  Fastq_to_Fasta : Gtk.Application {
         main_window.show_all ();
     }
 
+    //
+    // Main Function
+    //
+
     public static int main (string[] args) {
         var app = new Fastq_to_Fasta ();
         return app.run (args);
     }
-
 }
 
