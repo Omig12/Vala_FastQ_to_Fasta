@@ -50,10 +50,6 @@ public class  Fastq_to_Fasta : Gtk.Application {
         vbox.pack_start (scroll, true, true, 0);
         main_window.add (vbox);
 
-        var file_chooser = new Gtk.FileChooserDialog("Open File", main_window, Gtk.FileChooserAction.OPEN,"_Cancel", Gtk.ResponseType.CANCEL, "_Open", Gtk.ResponseType.ACCEPT, null);
-        var file_saver = new Gtk.FileChooserDialog("Save file as", main_window, Gtk.FileChooserAction.SAVE,"_Cancel", Gtk.ResponseType.CANCEL, "_Save", Gtk.ResponseType.ACCEPT, null);
-
-
         //
         // Application Functions
         //
@@ -61,6 +57,7 @@ public class  Fastq_to_Fasta : Gtk.Application {
         // Open File Function
         string filename = "";
         open_button.clicked.connect (() =>{
+             var file_chooser = new Gtk.FileChooserDialog("Open File", main_window, Gtk.FileChooserAction.OPEN,"_Cancel", Gtk.ResponseType.CANCEL, "_Open", Gtk.ResponseType.ACCEPT, null);
             if (file_chooser.run() == Gtk.ResponseType.ACCEPT) {
                 filename = file_chooser.get_filename ();
             }
@@ -81,23 +78,23 @@ public class  Fastq_to_Fasta : Gtk.Application {
 	    convert_button.clicked.connect (() => {
 	        int lines = 0;
             string[] text = text_view.buffer.text.split("\n");
-            text_view.buffer.text = "";
+            text_view.buffer.text = "Converting...";
+            string edit = "";
             foreach (string line in text) {
                 lines += 1;
                 if (lines != 3 && lines != 4) {
                     if (lines == 1) {
-                        text_view.buffer.text = string.join("\n",text_view.buffer.text, line.splice(0,1,">"));
+                        edit = string.join("\n", edit, line.splice(0,1,">"));
                     }
                     if (lines == 2) {
-                        text_view.buffer.text = string.join("\n",text_view.buffer.text, line);
+                        edit = string.join("\n",edit, line);
                     }
                 }
                 if (lines == 4) {
                     lines = 0;
                 }
             }
-            text_view.buffer.text = text_view.buffer.text[1:-1];
-            stdout.printf ("FileConverted\n");
+            text_view.buffer.text = edit[1:-1];
             convert_button.set_label ("File Converted");
             convert_button.sensitive = false;
             save_button.sensitive = true;
@@ -106,6 +103,7 @@ public class  Fastq_to_Fasta : Gtk.Application {
 
         // Save File Function
         save_button.clicked.connect (() =>{
+            var file_saver = new Gtk.FileChooserDialog("Save file as", main_window, Gtk.FileChooserAction.SAVE,"_Cancel", Gtk.ResponseType.CANCEL, "_Save", Gtk.ResponseType.ACCEPT, null);
             try {
                 file_saver.set_do_overwrite_confirmation (true);
                 file_saver.set_current_name (string.join(".",filename[0:-6],"fasta"));
